@@ -266,7 +266,9 @@ class TodosTest {
     @Test
     void testEqualsNull() {
         Task task = new Task(1);
-        Assertions.assertNotEquals(null, task);
+        Object o = null;
+        task.equals(o);
+        Assertions.assertFalse(task.equals(o));
     }
 
     @Test
