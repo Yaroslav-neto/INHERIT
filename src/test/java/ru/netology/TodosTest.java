@@ -8,6 +8,74 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class TodosTest {
 
+
+    @Test
+    public void shouldSomeTask() {
+        SimpleTask simpleTask = new SimpleTask(5, "Звонок родителям");
+        String[] subtasks = {"Молоко", "Звонок", "Хлеб"};
+        Epic epic = new Epic(55, subtasks);
+        Meeting meeting = new Meeting(
+                555,
+                "Выкатка 3й версии приложения",
+                "Приложение НетоБанка",
+                "Звонок во вторник после обеда"
+
+        );
+        String query = "Звонок";
+        Todos todos = new Todos();
+        todos.add(simpleTask);
+        todos.add(epic);
+        todos.add(meeting);
+
+        Task[] expected = {new SimpleTask(5, "Звонок родителям"), new Epic(55, subtasks), new Meeting(555, "Выкатка 3й версии приложения", "Приложение НетоБанка", "Звонок во вторник после обеда")};
+        Task[] actual = todos.search(query);
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldOneTask() {
+        SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
+        String[] subtasks = {"Молоко", "Яйца", "Хлеб"};
+        Epic epic = new Epic(55, subtasks);
+        Meeting meeting = new Meeting(
+                555,
+                "Выкатка 3й версии приложения",
+                "Приложение НетоБанка",
+                "Во вторник после обеда"
+        );
+        String query = "Яйца";
+        Todos todos = new Todos();
+        todos.add(simpleTask);
+        todos.add(epic);
+        todos.add(meeting);
+
+        Task[] expected = {new Epic(55, subtasks)};
+        Task[] actual = todos.search(query);
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNothingTask() {
+        SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
+        String[] subtasks = {"Молоко", "Яйца", "Хлеб"};
+        Epic epic = new Epic(55, subtasks);
+        Meeting meeting = new Meeting(
+                555,
+                "Выкатка 3й версии приложения",
+                "Приложение НетоБанка",
+                "Во вторник после обеда"
+        );
+        String query = "среда";
+        Todos todos = new Todos();
+        todos.add(simpleTask);
+        todos.add(epic);
+        todos.add(meeting);
+
+        Task[] expected = {};
+        Task[] actual = todos.search(query);
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
     @Test
     public void shouldAddThreeTasksOfDifferentType() {
         SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
@@ -204,7 +272,7 @@ class TodosTest {
     @Test
     void testEqualsDifferentClass() {
         Task task = new Task(1);
-        Meeting meeting = new Meeting(5, "a", "s", "d");
-        assertNotEquals(task, meeting);
+        String[] feeting = new String[0];
+        assertNotEquals(task, feeting);
     }
 }
